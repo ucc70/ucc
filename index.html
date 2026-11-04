@@ -14,10 +14,15 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 24px;
+      box-sizing: border-box;
     }
     img {
       display: block;
-      /* tamaño original: no se fuerza ancho ni alto */
+      /* En pantallas grandes se ve a tamaño original (640 px);
+         en pantallas chicas se achica para entrar completo. */
+      max-width: 100%;
+      height: auto;
     }
   </style>
 </head>
