@@ -66,29 +66,58 @@ aside img.logo{width:calc(100% + 3.2vw);max-width:none;max-height:none;margin:0 
 #big{position:fixed;inset:0;background:rgba(24,44,73,.93);display:none;place-items:center;z-index:50;cursor:zoom-out}
 #big.on{display:grid}
 #big img{width:min(92vh,92vw);height:min(92vh,92vw);background:#fff;padding:3vmin;border-radius:8px;object-fit:contain}
+/* v5 */
+:root{--aw:max(300px,26vw)}
+#app{display:flex}
+aside{flex:0 0 var(--aw);width:var(--aw);position:relative;padding:calc(100px + var(--aw)*.9*0.2049 + 2.5vh) 1.6vw 100px;transition:margin-left .6s cubic-bezier(.3,.8,.3,1)}
+#app.col aside{margin-left:calc(-1*var(--aw))}
+#stage{flex:1;min-width:0}
+#brand{position:absolute;left:calc(var(--aw)*.05);top:100px;width:calc(var(--aw)*.9);z-index:20}
+#brand img{display:block;width:100%;height:auto;transition:opacity .5s}
+#brand .ln{position:absolute;inset:0;opacity:0;filter:url(#navy)}
+#app.col #brand .ln{opacity:1}#app.col #brand .lw{opacity:0}
+#fold,#unfold{position:absolute;width:34px;height:34px;border-radius:50%;border:0;background:#fff;color:var(--oscuro);box-shadow:0 1px 8px rgba(0,0,0,.3);cursor:pointer;display:grid;place-items:center;z-index:30;padding:0}
+#fold{right:0;top:50%;transform:translate(50%,-50%)}
+#unfold{position:fixed;left:8px;top:50%;transform:translateY(-50%);opacity:0;pointer-events:none;transition:opacity .4s .3s}
+#app.col #unfold{opacity:.85;pointer-events:auto}
+#fold svg,#unfold svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.title{top:100px}
+.cnt{top:calc(100px + .4vh)}
+#mod{bottom:104px}#toast{bottom:156px}
+#empty{padding-top:60px;font:500 clamp(18px,1.9vw,32px) Montserrat,Arial,sans-serif;text-transform:none;letter-spacing:.02em;color:#555;opacity:.55}
+#cloud{inset:0;transition:opacity .8s}
+#cloud i{aspect-ratio:auto;transition:left 1.6s cubic-bezier(.3,.8,.3,1),top 1.6s cubic-bezier(.3,.8,.3,1),width 1.6s cubic-bezier(.3,.8,.3,1),height 1.6s cubic-bezier(.3,.8,.3,1)}
+.w{cursor:pointer;transition:left 1.2s cubic-bezier(.3,.8,.3,1),top 1.2s cubic-bezier(.3,.8,.3,1),font-size 1.2s cubic-bezier(.3,.8,.3,1),opacity .6s,transform .35s,color .3s}
+.w.sel{color:#fe4767!important;transform:translate(-50%,-50%) scale(1.14);z-index:3}
+.w.sel .fl{text-shadow:0 0 18px rgba(254,71,103,.35)}
+#words.hasSel .w:not(.sel){opacity:.3}
+#words.hid{pointer-events:none}
+#fold{transition:opacity .3s}#app.col #fold{opacity:0;pointer-events:none}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute"><filter id="navy" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 .094  0 0 0 0 .173  0 0 0 0 .286  0 0 0 1 0"/></filter></svg>
 <div id="app">
+  <div id="brand"><img class="lw" src="logoblanco.png" alt="UCC"><img class="ln" src="logoblanco.png" alt=""></div>
+  <button id="unfold" title="Mostrar barra"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
   <aside>
-    <img class="logo" src="logoblanco.png" alt="UCC" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-    <div class="logo-fb">UCC</div>
     <div class="slide-card"><h1><b>70</b>años transformando el mundo juntos</h1><p>Desde 1956 formamos personas de ciencia, conciencia ética y profundo compromiso social.</p></div>
     <div class="tag">Sumá tu palabra</div>
     <div class="qr" id="qr" title="Tocá para agrandar"><img src="qr-ucc.png" alt="QR" onerror="this.replaceWith('Falta qr-ucc.png')"></div>
     <div class="pill">Escaneá el código con la cámara de tu celular</div>
+    <button id="fold" title="Ocultar barra"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
   </aside>
   <div id="stage">
     <div class="title">¿Qué palabra define a la UCC?</div><div class="cnt" id="cnt"></div>
     <div class="drift" style="top:8%;animation-duration:90s"></div>
     <div class="drift" style="top:45%;animation-duration:130s;animation-delay:-60s;transform-origin:left;scale:1.4"></div>
     <div class="drift" style="top:78%;animation-duration:110s;animation-delay:-30s"></div>
-    <div id="cloud"><i style="left:2%;top:30%;width:38%"></i><i style="left:20%;top:-5%;width:36%;animation-delay:-2s"></i><i style="left:42%;top:-12%;width:40%;animation-delay:-4s"></i><i style="left:62%;top:5%;width:36%;animation-delay:-1s"></i><i style="left:64%;top:35%;width:36%;animation-delay:-3s"></i><i style="left:30%;top:25%;width:46%;animation-delay:-5s"></i></div>
+    <div id="cloud"></div>
     <div id="words"></div>
     <div id="empty">Tu palabra aparecerá acá</div>
     <div id="toast"></div>
     <div id="mod">
-      <button id="bClear" title="Limpiar pantalla (moderador)"><svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 10v6M14 10v6"/></svg></button>
+      <button id="bFull" title="Pantalla completa (F11)"></button>
       <button id="bAll" title="Mostrar todas las palabras (moderador)"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
     </div>
   </div>
@@ -98,12 +127,12 @@ aside img.logo{width:calc(100% + 3.2vw);max-width:none;max-height:none;margin:0 
 <script>
 const $=id=>document.getElementById(id);
 const stage=$('stage'),wordsEl=$('words'),cloud=$('cloud');
-const COLORS=['#182c49','#1d317d','#17a2b8','#fe4767','#00a4eb','#555555'];
+const COLORS=['#182c49','#1d317d','#17a2b8','#00a4eb','#555555'],sel=new Set();
 const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\p{L}\p{N}]/gu,'');
 const pretty=s=>s.trim().toLocaleUpperCase('es');
 const hash=s=>[...s].reduce((a,c)=>(a*31+c.charCodeAt(0))>>>0,7);
 const ctx=document.createElement('canvas').getContext('2d');
-let rows=[],groups=[],els=new Map(),lastSig=null,cutoff=+(localStorage.getItem('ucc70_idx')||0);
+let rows=[],groups=[],els=new Map(),lastSig=null,cutoff=0;
 
 function group(){
   if(rows.length<cutoff){cutoff=0;localStorage.setItem('ucc70_idx',0)} // el Sheet se vació
@@ -116,31 +145,34 @@ function group(){
   groups=[...m.values()].sort((a,b)=>b.count-a.count||a.first-b.first);
 }
 function place(W,H,k){
-  const n=groups.length,sc=W/1300,base=Math.max(30,Math.min(84,88-n*1.1))*sc*k,pad=12,out=[];
+  const TOP=160,BOT=H-100,n=groups.length,sc=W/1300,base=Math.max(30,Math.min(84,88-n*1.1))*sc*k,pad=12,out=[],obs=[];
+  if($('app').classList.contains('col')){const b=$('brand').getBoundingClientRect(),q=stage.getBoundingClientRect();obs.push({x:(b.left+b.right)/2-q.left,y:(b.top+b.bottom)/2-q.top,w:b.width+30,h:b.height+30})}
   for(const g of groups){
     const size=Math.min(base*(1+.3*(g.count-1)),base*3.3,H*.22);
     ctx.font=`800 ${size}px Montserrat,Arial,sans-serif`;
     const w=ctx.measureText(g.label).width+size*.4,h=size*1.12;let ok=false;
     for(let i=0;i<2600;i++){
-      const a=i*.3,r=1.1*a,x=W/2+r*Math.cos(a)*1.7,y=H/2+32+r*Math.sin(a);
-      if(x-w/2<pad||x+w/2>W-pad||y-h/2<pad+64||y+h/2>H-pad)continue;
-      if(out.some(o=>Math.abs(x-o.x)<(w+o.w)/2&&Math.abs(y-o.y)<(h+o.h)/2))continue;
+      const a=i*.3,r=1.1*a,x=W/2+r*Math.cos(a)*1.7,y=(TOP+BOT)/2+r*Math.sin(a);
+      if(x-w/2<pad||x+w/2>W-pad||y-h/2<TOP||y+h/2>BOT)continue;
+      if(out.concat(obs).some(o=>Math.abs(x-o.x)<(w+o.w)/2&&Math.abs(y-o.y)<(h+o.h)/2))continue;
       out.push({g,x,y,w,h,size});ok=true;break;
     }
     if(!ok)return null;
   }
   return out;
 }
+cloud.innerHTML='<i></i>'.repeat(13);[...cloud.children].forEach((e,j)=>e.style.animationDelay=-(j*1.1)+'s');
+function applySel(){els.forEach((el,k)=>el.classList.toggle('sel',sel.has(k)));wordsEl.classList.toggle('hasSel',sel.size>0)}
 function layout(){
   const W=stage.clientWidth,H=stage.clientHeight;let res=null,k=1;
   for(let t=0;t<16&&!res;t++){res=place(W,H,k);k*=.88}
   res=res||[];
   const keep=new Set(res.map(o=>o.g.k));
-  els.forEach((el,key)=>{if(!keep.has(key)){el.classList.add('out');setTimeout(()=>el.remove(),900);els.delete(key)}});
+  els.forEach((el,key)=>{if(!keep.has(key)){el.classList.add('out');setTimeout(()=>el.remove(),900);els.delete(key);sel.delete(key)}});
   res.forEach(o=>{
     let el=els.get(o.g.k);
     if(!el){
-      el=document.createElement('div');el.className='w';el.dataset.c=o.g.count;
+      el=document.createElement('div');el.className='w';el.dataset.k=o.g.k;el.dataset.c=o.g.count;
       el.innerHTML='<div class="pop"><span class="fl"></span></div>';
       const fl=el.querySelector('.fl'),h=hash(o.g.k);
       fl.textContent=o.g.label;el.style.color=COLORS[h%COLORS.length];
@@ -155,12 +187,22 @@ function layout(){
     el.dataset.c=o.g.count;
     requestAnimationFrame(()=>{el.style.left=o.x+'px';el.style.top=o.y+'px';el.style.fontSize=o.size+'px'});
   });
-  if(res.length){ // la nube de fondo crece con las palabras
+  if(res.length){ // la nube de fondo: una elipse ajustada al contorno de las palabras
     const x0=Math.min(...res.map(o=>o.x-o.w/2)),x1=Math.max(...res.map(o=>o.x+o.w/2));
     const y0=Math.min(...res.map(o=>o.y-o.h/2)),y1=Math.max(...res.map(o=>o.y+o.h/2));
-    const px=(x1-x0)*.22+60,py=(y1-y0)*.3+50;
-    Object.assign(cloud.style,{left:x0-px+'px',top:y0-py+'px',width:(x1-x0)+2*px+'px',height:(y1-y0)+2*py+'px',opacity:1});
+    const cx=(x0+x1)/2,cy=(y0+y1)/2,TOP=160,BOT=H-100;
+    let A=(x1-x0)/2*1.08+26,B=(y1-y0)/2*1.08+22;
+    A=Math.min(Math.max(A,150),cx-28,W-cx-28);B=Math.min(Math.max(B,95),cy-(TOP-30),BOT+30-cy);
+    const K=[...cloud.children],put=(e,l,t,w,h)=>{e.style.left=l+'px';e.style.top=t+'px';e.style.width=w+'px';e.style.height=h+'px'};
+    put(K[0],cx-A*.82,cy-B*.82,A*1.64,B*1.64);
+    const R=Math.min(A,B)*.4;
+    for(let j=1;j<K.length;j++){
+      const t=(j-1)/(K.length-1)*2*Math.PI,v=.8+.35*((j*37)%5)/4,ry=R*v,rx=Math.max(A*.17,R*.7)*v;
+      put(K[j],cx+(A-rx)*Math.cos(t)-rx,cy+(B-ry)*Math.sin(t)-ry,2*rx,2*ry);
+    }
+    cloud.style.opacity=1;
   }else cloud.style.opacity=0;
+  applySel();
 }
 function render(){
   group();
@@ -184,12 +226,20 @@ function demo(){
   let i=0;setInterval(()=>{rows.push({w:L[i++%L.length],ts:Date.now()});render()},1400);
 }
 // Moderador
-let armed=0;
 function toast(t){const e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2800)}
-$('bClear').onclick=()=>{
-  if(Date.now()-armed>3000){armed=Date.now();toast('Tocá de nuevo para limpiar la pantalla');return}
-  armed=0;cutoff=rows.length;localStorage.setItem('ucc70_idx',cutoff);lastSig=null;render();toast('Pantalla limpia');
-};
+const FS='<svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>';
+const FSX='<svg viewBox="0 0 24 24"><path d="M8 3v3a2 2 0 01-2 2H3m18 0h-3a2 2 0 01-2-2V3m0 18v-3a2 2 0 012-2h3M3 16h3a2 2 0 012 2v3"/></svg>';
+$('bFull').innerHTML=FS;
+$('bFull').onclick=()=>{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(()=>toast('Tu navegador no permite pantalla completa'))};
+document.addEventListener('fullscreenchange',()=>{$('bFull').innerHTML=document.fullscreenElement?FSX:FS});
+$('fold').onclick=()=>$('app').classList.add('col');
+$('unfold').onclick=()=>$('app').classList.remove('col');
+stage.addEventListener('click',e=>{
+  if(e.target.closest('#mod,#toast'))return;
+  const w=e.target.closest('.w');
+  if(w){const k=w.dataset.k;sel.has(k)?sel.delete(k):sel.add(k)}else sel.clear();
+  applySel();
+});
 let hidden=false;
 const EYE='<svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>';
 const EYEOFF='<svg viewBox="0 0 24 24"><path d="M17.9 17.9A10.9 10.9 0 0112 20C5 20 1 12 1 12a18.5 18.5 0 015.1-5.9M9.9 4.2A9.1 9.1 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.2 3.2M14.1 14.1a3 3 0 11-4.2-4.2M1 1l22 22"/></svg>';
@@ -197,7 +247,7 @@ $('bAll').onclick=()=>{hidden=!hidden;wordsEl.classList.toggle('hid',hidden);$('
 $('qr').onclick=()=>$('big').classList.add('on');
 $('big').onclick=()=>$('big').classList.remove('on');
 addEventListener('keydown',e=>{if(e.key==='Escape')$('big').classList.remove('on')});
-let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{lastSig=null;render()},250)});
+let rt;new ResizeObserver(()=>{clearTimeout(rt);rt=setTimeout(()=>{lastSig=null;render()},250)}).observe(stage);
 const demoMode=location.search.includes('demo')||CONFIG.SCRIPT_URL.includes('PEGAR');
 const go=()=>demoMode?demo():poll();
 Promise.race([document.fonts.load('800 40px Montserrat'),new Promise(r=>setTimeout(r,2500))]).then(go);
