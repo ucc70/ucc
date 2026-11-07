@@ -53,6 +53,19 @@ aside img.logo{max-width:66%;max-height:9vh}
 #empty.hide{opacity:0}
 @media(max-width:800px){#app{grid-template-columns:1fr;grid-template-rows:auto 1fr}aside{flex-direction:row;gap:12px;padding:8px}.slide-card,.q,.pill,.tag{display:none}.qr{width:90px;padding:6px}}
 @media(prefers-reduced-motion:reduce){*{animation-duration:0s!important}}
+aside{padding:0 1.6vw 3vh}
+aside img.logo{width:calc(100% + 3.2vw);max-width:none;max-height:none;margin:0 -1.6vw}
+.logo-fb{padding-top:3vh}
+.slide-card{padding:1.5vh 1vw}
+.slide-card h1{font:800 clamp(12px,1.15vw,20px)/1.15 Montserrat,Arial,sans-serif}
+.slide-card h1 b{font-size:2.2em}
+.slide-card p{font-size:clamp(9px,.75vw,13px)}
+.title{left:0;right:0;text-align:center}
+.qr{cursor:zoom-in}
+#words{transition:opacity .6s}#words.hid{opacity:0}
+#big{position:fixed;inset:0;background:rgba(24,44,73,.93);display:none;place-items:center;z-index:50;cursor:zoom-out}
+#big.on{display:grid}
+#big img{width:min(92vh,92vw);height:min(92vh,92vw);background:#fff;padding:3vmin;border-radius:8px;object-fit:contain}
 </style>
 </head>
 <body>
@@ -62,7 +75,7 @@ aside img.logo{max-width:66%;max-height:9vh}
     <div class="logo-fb">UCC</div>
     <div class="slide-card"><h1><b>70</b>años transformando el mundo juntos</h1><p>Desde 1956 formamos personas de ciencia, conciencia ética y profundo compromiso social.</p></div>
     <div class="tag">Sumá tu palabra</div>
-    <div class="qr"><img src="qr-ucc.png" alt="QR" onerror="this.replaceWith('Falta qr-ucc.png')"></div>
+    <div class="qr" id="qr" title="Tocá para agrandar"><img src="qr-ucc.png" alt="QR" onerror="this.replaceWith('Falta qr-ucc.png')"></div>
     <div class="pill">Escaneá el código con la cámara de tu celular</div>
   </aside>
   <div id="stage">
@@ -80,20 +93,22 @@ aside img.logo{max-width:66%;max-height:9vh}
     </div>
   </div>
 </div>
+<div id="big"><img src="qr-ucc.png" alt="QR"></div>
 <script src="config.js"></script>
 <script>
 const $=id=>document.getElementById(id);
 const stage=$('stage'),wordsEl=$('words'),cloud=$('cloud');
 const COLORS=['#182c49','#1d317d','#17a2b8','#fe4767','#00a4eb','#555555'];
 const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\p{L}\p{N}]/gu,'');
-const pretty=s=>(s===s.toUpperCase()&&s.length<=5)?s:s.charAt(0).toUpperCase()+s.slice(1).toLowerCase();
+const pretty=s=>s.trim().toLocaleUpperCase('es');
 const hash=s=>[...s].reduce((a,c)=>(a*31+c.charCodeAt(0))>>>0,7);
 const ctx=document.createElement('canvas').getContext('2d');
-let rows=[],groups=[],els=new Map(),lastSig='',cutoff=+(localStorage.getItem('ucc70_cut')||0);
+let rows=[],groups=[],els=new Map(),lastSig=null,cutoff=+(localStorage.getItem('ucc70_idx')||0);
 
 function group(){
+  if(rows.length<cutoff){cutoff=0;localStorage.setItem('ucc70_idx',0)} // el Sheet se vació
   const m=new Map();
-  rows.filter(r=>r.ts>cutoff).forEach((r,i)=>{
+  rows.slice(cutoff).forEach((r,i)=>{
     const k=norm(r.w);if(!k)return;
     const g=m.get(k)||{k,label:pretty(r.w.trim()),count:0,first:i};
     g.count++;m.set(k,g);
@@ -173,11 +188,16 @@ let armed=0;
 function toast(t){const e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2800)}
 $('bClear').onclick=()=>{
   if(Date.now()-armed>3000){armed=Date.now();toast('Tocá de nuevo para limpiar la pantalla');return}
-  armed=0;cutoff=rows.length?rows.reduce((m,r)=>Math.max(m,r.ts),0):Date.now();
-  localStorage.setItem('ucc70_cut',cutoff);lastSig='';render();toast('Pantalla limpia');
+  armed=0;cutoff=rows.length;localStorage.setItem('ucc70_idx',cutoff);lastSig=null;render();toast('Pantalla limpia');
 };
-$('bAll').onclick=()=>{cutoff=0;localStorage.setItem('ucc70_cut',0);lastSig='';render();toast('Mostrando todas las palabras')};
-let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{lastSig='';render()},250)});
+let hidden=false;
+const EYE='<svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+const EYEOFF='<svg viewBox="0 0 24 24"><path d="M17.9 17.9A10.9 10.9 0 0112 20C5 20 1 12 1 12a18.5 18.5 0 015.1-5.9M9.9 4.2A9.1 9.1 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.2 3.2M14.1 14.1a3 3 0 11-4.2-4.2M1 1l22 22"/></svg>';
+$('bAll').onclick=()=>{hidden=!hidden;wordsEl.classList.toggle('hid',hidden);$('bAll').innerHTML=hidden?EYEOFF:EYE;toast(hidden?'Palabras ocultas':'Palabras visibles')};
+$('qr').onclick=()=>$('big').classList.add('on');
+$('big').onclick=()=>$('big').classList.remove('on');
+addEventListener('keydown',e=>{if(e.key==='Escape')$('big').classList.remove('on')});
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{lastSig=null;render()},250)});
 const demoMode=location.search.includes('demo')||CONFIG.SCRIPT_URL.includes('PEGAR');
 const go=()=>demoMode?demo():poll();
 Promise.race([document.fonts.load('800 40px Montserrat'),new Promise(r=>setTimeout(r,2500))]).then(go);
