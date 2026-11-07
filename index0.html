@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#182c49">
+<title>UCC 70 años · Tu palabra</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--oscuro:#182c49;--azul:#1d317d;--coral:#fe4767;--cian:#17a2b8;--gris:#555}
+*{box-sizing:border-box}
+body{margin:0;font-family:Roboto,Arial,sans-serif;background:#fff;color:var(--gris);font-size:19px;line-height:1.5}
+h1,h2,h5,label,button,.tag,.tuya{font-family:Montserrat,Arial,sans-serif}
+/* Portada: foto (opcional) + tarjeta translúcida, como los slides de la home */
+.hero{padding:22px 18px 34px;background:linear-gradient(rgba(29,49,125,.19),rgba(29,49,125,.19)),url(fondo.jpg) center/cover,linear-gradient(160deg,#25436f,var(--oscuro));color:#fff}
+.hero img{height:50px;display:block;margin:0 auto 26px}
+.logo-fb{display:none;text-align:center;font:800 34px Montserrat;letter-spacing:2px;margin-bottom:22px}
+.slide-card{max-width:520px;margin:0 auto;border-radius:20px;padding:26px 24px;background:linear-gradient(180deg,rgba(37,67,111,.72) 21%,rgba(37,37,37,.45) 98%);box-shadow:0 0 3px rgba(0,0,0,.27);animation:in .9s ease both}
+.slide-card h1{margin:0 0 8px;font-size:28px;font-weight:800;text-transform:uppercase;line-height:1.15}
+.slide-card h5{margin:0;font-size:16px;font-weight:700;line-height:1.4}
+@keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+main{max-width:520px;margin:0 auto;padding:30px 16px 40px}
+.tag{display:inline-block;background:var(--coral);color:#fff;font-size:14px;font-weight:700;padding:4px 10px}
+h2{margin:12px 0 14px;font-size:28px;font-weight:800;text-transform:uppercase;color:var(--oscuro);line-height:1.15}
+.card{background:#fff;border-radius:4px;padding:22px 20px 24px;box-shadow:0 1px 8px rgba(0,0,0,.18)}
+.card p{margin:0}
+label{display:block;font-weight:700;color:var(--oscuro);margin:20px 0 6px}
+input{width:100%;font:inherit;font-size:22px;padding:13px 14px;border:1px solid #b9bfc9;border-radius:4px;background:#fff;color:#222;outline:none}
+input:focus{border-color:var(--cian);box-shadow:0 0 0 3px rgba(23,162,184,.3)}
+.big{font:800 26px Montserrat,Arial,sans-serif;text-align:center;color:var(--oscuro)}
+.hint{min-height:24px;font-size:16px;color:#c0233f;margin:6px 0 0;opacity:0;transition:opacity .25s}.hint.show{opacity:1}
+button{width:100%;margin-top:16px;font-weight:700;font-size:20px;color:#fff;background:var(--oscuro);border:0;border-radius:25px;padding:14px;cursor:pointer;transition:background .2s,transform .15s}
+button:hover{background:#0a3c84}button:active{transform:scale(.97)}button:disabled{opacity:.7}
+#gracias{display:none;text-align:center}
+.ok{width:88px;height:88px;margin:4px auto 8px;border-radius:50%;background:var(--cian);display:grid;place-items:center;animation:pop .6s cubic-bezier(.3,1.6,.5,1)}
+.ok svg{width:48px;height:48px;stroke:#fff;stroke-width:5;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;animation:draw .5s .35s forwards}
+.tuya{display:inline-block;margin:14px 0 8px;padding:6px 28px;font-size:32px;font-weight:800;text-transform:uppercase;color:var(--oscuro);border:2px solid var(--cian);border-radius:50rem}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}@keyframes draw{to{stroke-dashoffset:0}}
+footer{background:var(--oscuro);color:#fff;text-align:center;padding:22px;font:500 16px Montserrat,Arial,sans-serif}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <img src="logoblanco.png" alt="UCC" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+  <div class="logo-fb">UCC</div>
+  <div class="slide-card">
+    <h1>70 años transformando el mundo juntos</h1>
+    <h5>Desde 1956 formamos personas de ciencia, conciencia ética y profundo compromiso social.</h5>
+  </div>
+</header>
+<main>
+  <section id="form">
+    <span class="tag">Sumate a la celebración</span>
+    <h2>¡Bienvenido/a!</h2>
+    <div class="card">
+      <p>Nos alegra festejar con vos. Contanos cómo ves a nuestra Universidad.</p>
+      <label for="nombre">¿Cómo te llamás?</label>
+      <input id="nombre" type="text" autocomplete="given-name" maxlength="60" placeholder="Tu nombre">
+      <label for="palabra">Definí a la UCC en <u>una sola palabra</u></label>
+      <input id="palabra" class="big" type="text" maxlength="30" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Tu palabra">
+      <div class="hint" id="hint" role="alert"></div>
+      <button id="enviar">Enviar</button>
+    </div>
+  </section>
+  <section id="gracias">
+    <span class="tag">¡Listo!</span>
+    <h2>¡Gracias, <span id="gn"></span>!</h2>
+    <div class="card">
+      <div class="ok"><svg viewBox="0 0 52 52"><path d="M12 27l10 10 18-20"/></svg></div>
+      <p>Tu palabra ya está en la pantalla:</p>
+      <div class="tuya" id="gw"></div>
+      <p>Mirá cómo se suma a la nube.</p>
+    </div>
+  </section>
+</main>
+<footer>ucc.edu.ar</footer>
+<script src="config.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+const pal=$('palabra'),nom=$('nombre'),hint=$('hint'),btn=$('enviar');
+function msg(t){hint.textContent=t;hint.classList.toggle('show',!!t)}
+pal.addEventListener('input',()=>{
+  let v=pal.value.replace(/^\s+/,'');
+  if(/\s\S/.test(v)){v=v.split(/\s+/)[0];msg('Escribí una sola palabra, sin espacios.')}else msg('');
+  pal.value=v.replace(/[^\p{L}\p{N}\-]/gu,'');
+});
+btn.addEventListener('click',async()=>{
+  const n=nom.value.trim(),w=pal.value.trim();
+  if(!n){msg('Escribí tu nombre, por favor.');nom.focus();return}
+  if(!w){msg('Escribí tu palabra, por favor.');pal.focus();return}
+  if(CONFIG.SCRIPT_URL.includes('PEGAR')){msg('Falta configurar config.js');return}
+  btn.disabled=true;btn.textContent='Enviando…';msg('');
+  try{
+    await fetch(CONFIG.SCRIPT_URL,{method:'POST',mode:'no-cors',body:new URLSearchParams({nombre:n,palabra:w})});
+    $('gn').textContent=n.split(' ')[0];$('gw').textContent=w;
+    $('form').style.display='none';$('gracias').style.display='block';window.scrollTo(0,0);
+  }catch(e){
+    msg('No pudimos enviarla. Revisá tu conexión e intentá de nuevo.');
+    btn.disabled=false;btn.textContent='Enviar';
+  }
+});
+</script>
+</body>
+</html>

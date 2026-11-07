@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UCC 70 años · Nube de palabras</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--oscuro:#182c49;--azul:#1d317d;--coral:#fe4767;--cian:#17a2b8}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;font-family:Roboto,Arial,sans-serif;color:#555;background:#fff}
+#app{display:grid;grid-template-columns:minmax(300px,26%) 1fr;height:100%}
+aside{background:linear-gradient(rgba(29,49,125,.19),rgba(29,49,125,.19)),url(fondo.jpg) center/cover,linear-gradient(170deg,#25436f,var(--oscuro));color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;padding:3vh 1.6vw;z-index:5}
+aside img.logo{max-width:66%;max-height:9vh}
+.logo-fb{display:none;font:800 44px Montserrat;letter-spacing:3px}
+.slide-card{width:100%;border-radius:20px;padding:2.2vh 1.4vw;background:linear-gradient(180deg,rgba(37,67,111,.72) 21%,rgba(37,37,37,.45) 98%);box-shadow:0 0 3px rgba(0,0,0,.27)}
+.slide-card h1{margin:0 0 .5vh;font:800 clamp(18px,1.9vw,34px)/1.12 Montserrat,Arial,sans-serif;text-transform:uppercase}
+.slide-card h1 b{display:block;font-size:2.6em;line-height:1}
+.slide-card p{margin:0;font:700 clamp(12px,1vw,17px)/1.3 Montserrat,Arial,sans-serif}
+.tag{display:inline-block;background:var(--coral);color:#fff;font:700 clamp(12px,1vw,17px) Montserrat,Arial,sans-serif;padding:.3em .7em}
+.q{font:800 clamp(18px,1.8vw,30px)/1.15 Montserrat,Arial,sans-serif;text-transform:uppercase}
+.qr{background:#fff;border-radius:4px;padding:10px;width:min(74%,30vh);aspect-ratio:1;display:grid;place-items:center;color:var(--oscuro);font-weight:700;font-size:14px;box-shadow:0 1px 8px rgba(0,0,0,.3)}
+.qr img{width:100%;height:100%;object-fit:contain}
+.pill{display:inline-block;border:1px solid #f8f9fa;color:#f8f9fa;border-radius:50rem;padding:.45em 1.3em;font:500 clamp(12px,1vw,17px) Roboto,Arial,sans-serif}
+#stage{position:relative;overflow:hidden;background:#fff}
+.title{position:absolute;left:2.2vw;top:2.4vh;z-index:3;font:800 clamp(18px,2vw,34px) Montserrat,Arial,sans-serif;text-transform:uppercase;color:var(--oscuro)}
+.cnt{position:absolute;right:2vw;top:2.8vh;z-index:3;font:500 clamp(13px,1.1vw,18px) Montserrat,Arial,sans-serif;border:1px solid var(--oscuro);color:var(--oscuro);border-radius:50rem;padding:.3em 1em;opacity:0;transition:opacity .4s}
+.cnt.on{opacity:1}
+.drift{position:absolute;background:#eef1f8;border-radius:100px;width:300px;height:80px;animation:dr linear infinite}
+.drift:before,.drift:after{content:"";position:absolute;background:inherit;border-radius:50%}
+.drift:before{width:130px;height:130px;left:40px;top:-60px}.drift:after{width:160px;height:160px;left:120px;top:-85px}
+@keyframes dr{from{transform:translateX(-400px)}to{transform:translateX(120vw)}}
+#cloud{position:absolute;transition:all 1.6s cubic-bezier(.3,.8,.3,1);pointer-events:none}
+#cloud i{position:absolute;border-radius:50%;background:#e8eaf2;box-shadow:0 10px 40px rgba(24,44,73,.1);aspect-ratio:1;animation:bob 7s ease-in-out infinite alternate}
+@keyframes bob{from{transform:translate(0,0) scale(1)}to{transform:translate(2%,-4%) scale(1.05)}}
+#words{position:absolute;inset:0}
+.w{position:absolute;transform:translate(-50%,-50%);font-family:Montserrat,Arial,sans-serif;font-weight:800;white-space:nowrap;line-height:1.1;transition:left 1.2s cubic-bezier(.3,.8,.3,1),top 1.2s cubic-bezier(.3,.8,.3,1),font-size 1.2s cubic-bezier(.3,.8,.3,1),opacity .8s}
+.w .pop{animation:in .9s cubic-bezier(.3,1.7,.5,1) both}
+.w .pop.bump{animation:bump .9s cubic-bezier(.3,1.7,.5,1)}
+.w .fl{display:inline-block;animation:fl var(--d,7s) ease-in-out var(--l,0s) infinite alternate}
+.w.out{opacity:0}
+@keyframes in{from{transform:scale(0) rotate(-12deg);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
+@keyframes fl{from{transform:translate(0,0)}to{transform:translate(var(--x,6px),var(--y,-8px))}}
+#mod{position:absolute;right:14px;bottom:12px;display:flex;gap:8px;z-index:9;opacity:.25;transition:opacity .3s}
+#mod:hover{opacity:1}
+#mod button{width:42px;height:42px;border-radius:50%;border:1px solid var(--oscuro);background:#fff;color:var(--oscuro);cursor:pointer;display:grid;place-items:center}
+#mod button:hover{background:var(--oscuro);color:#fff}
+#mod svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#toast{position:absolute;right:14px;bottom:62px;background:var(--oscuro);color:#fff;font:500 14px Montserrat,Arial,sans-serif;padding:8px 16px;border-radius:50rem;opacity:0;transition:opacity .3s;pointer-events:none;z-index:9}
+#toast.show{opacity:1}
+#empty{position:absolute;inset:0;display:grid;place-items:center;font:800 clamp(22px,2.6vw,44px) Montserrat,Arial,sans-serif;text-transform:uppercase;text-align:center;padding:0 8%;color:var(--oscuro);opacity:.3;transition:opacity .6s;pointer-events:none}
+#empty.hide{opacity:0}
+@media(max-width:800px){#app{grid-template-columns:1fr;grid-template-rows:auto 1fr}aside{flex-direction:row;gap:12px;padding:8px}.slide-card,.q,.pill,.tag{display:none}.qr{width:90px;padding:6px}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:0s!important}}
+</style>
+</head>
+<body>
+<div id="app">
+  <aside>
+    <img class="logo" src="logoblanco.png" alt="UCC" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <div class="logo-fb">UCC</div>
+    <div class="slide-card"><h1><b>70</b>años transformando el mundo juntos</h1><p>Desde 1956 formamos personas de ciencia, conciencia ética y profundo compromiso social.</p></div>
+    <div class="tag">Sumá tu palabra</div>
+    <div class="qr"><img src="qr-ucc.png" alt="QR" onerror="this.replaceWith('Falta qr-ucc.png')"></div>
+    <div class="pill">Escaneá el código con la cámara de tu celular</div>
+  </aside>
+  <div id="stage">
+    <div class="title">¿Qué palabra define a la UCC?</div><div class="cnt" id="cnt"></div>
+    <div class="drift" style="top:8%;animation-duration:90s"></div>
+    <div class="drift" style="top:45%;animation-duration:130s;animation-delay:-60s;transform-origin:left;scale:1.4"></div>
+    <div class="drift" style="top:78%;animation-duration:110s;animation-delay:-30s"></div>
+    <div id="cloud"><i style="left:2%;top:30%;width:38%"></i><i style="left:20%;top:-5%;width:36%;animation-delay:-2s"></i><i style="left:42%;top:-12%;width:40%;animation-delay:-4s"></i><i style="left:62%;top:5%;width:36%;animation-delay:-1s"></i><i style="left:64%;top:35%;width:36%;animation-delay:-3s"></i><i style="left:30%;top:25%;width:46%;animation-delay:-5s"></i></div>
+    <div id="words"></div>
+    <div id="empty">Tu palabra aparecerá acá</div>
+    <div id="toast"></div>
+    <div id="mod">
+      <button id="bClear" title="Limpiar pantalla (moderador)"><svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 10v6M14 10v6"/></svg></button>
+      <button id="bAll" title="Mostrar todas las palabras (moderador)"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
+    </div>
+  </div>
+</div>
+<script src="config.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+const stage=$('stage'),wordsEl=$('words'),cloud=$('cloud');
+const COLORS=['#182c49','#1d317d','#17a2b8','#fe4767','#00a4eb','#555555'];
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\p{L}\p{N}]/gu,'');
+const pretty=s=>(s===s.toUpperCase()&&s.length<=5)?s:s.charAt(0).toUpperCase()+s.slice(1).toLowerCase();
+const hash=s=>[...s].reduce((a,c)=>(a*31+c.charCodeAt(0))>>>0,7);
+const ctx=document.createElement('canvas').getContext('2d');
+let rows=[],groups=[],els=new Map(),lastSig='',cutoff=+(localStorage.getItem('ucc70_cut')||0);
+
+function group(){
+  const m=new Map();
+  rows.filter(r=>r.ts>cutoff).forEach((r,i)=>{
+    const k=norm(r.w);if(!k)return;
+    const g=m.get(k)||{k,label:pretty(r.w.trim()),count:0,first:i};
+    g.count++;m.set(k,g);
+  });
+  groups=[...m.values()].sort((a,b)=>b.count-a.count||a.first-b.first);
+}
+function place(W,H,k){
+  const n=groups.length,sc=W/1300,base=Math.max(30,Math.min(84,88-n*1.1))*sc*k,pad=12,out=[];
+  for(const g of groups){
+    const size=Math.min(base*(1+.3*(g.count-1)),base*3.3,H*.22);
+    ctx.font=`800 ${size}px Montserrat,Arial,sans-serif`;
+    const w=ctx.measureText(g.label).width+size*.4,h=size*1.12;let ok=false;
+    for(let i=0;i<2600;i++){
+      const a=i*.3,r=1.1*a,x=W/2+r*Math.cos(a)*1.7,y=H/2+32+r*Math.sin(a);
+      if(x-w/2<pad||x+w/2>W-pad||y-h/2<pad+64||y+h/2>H-pad)continue;
+      if(out.some(o=>Math.abs(x-o.x)<(w+o.w)/2&&Math.abs(y-o.y)<(h+o.h)/2))continue;
+      out.push({g,x,y,w,h,size});ok=true;break;
+    }
+    if(!ok)return null;
+  }
+  return out;
+}
+function layout(){
+  const W=stage.clientWidth,H=stage.clientHeight;let res=null,k=1;
+  for(let t=0;t<16&&!res;t++){res=place(W,H,k);k*=.88}
+  res=res||[];
+  const keep=new Set(res.map(o=>o.g.k));
+  els.forEach((el,key)=>{if(!keep.has(key)){el.classList.add('out');setTimeout(()=>el.remove(),900);els.delete(key)}});
+  res.forEach(o=>{
+    let el=els.get(o.g.k);
+    if(!el){
+      el=document.createElement('div');el.className='w';el.dataset.c=o.g.count;
+      el.innerHTML='<div class="pop"><span class="fl"></span></div>';
+      const fl=el.querySelector('.fl'),h=hash(o.g.k);
+      fl.textContent=o.g.label;el.style.color=COLORS[h%COLORS.length];
+      fl.style.setProperty('--d',(5+h%5)+'s');fl.style.setProperty('--l',-(h%7)+'s');
+      fl.style.setProperty('--x',((h%13)-6)+'px');fl.style.setProperty('--y',-(4+h%9)+'px');
+      el.style.left=o.x+'px';el.style.top=o.y+'px';el.style.fontSize=o.size+'px';
+      wordsEl.appendChild(el);els.set(o.g.k,el);
+    }else if(+el.dataset.c<o.g.count){
+      const p=el.querySelector('.pop');p.style.animation='none';void p.offsetWidth;p.style.animation='';p.classList.add('bump');
+      setTimeout(()=>p.classList.remove('bump'),950);
+    }
+    el.dataset.c=o.g.count;
+    requestAnimationFrame(()=>{el.style.left=o.x+'px';el.style.top=o.y+'px';el.style.fontSize=o.size+'px'});
+  });
+  if(res.length){ // la nube de fondo crece con las palabras
+    const x0=Math.min(...res.map(o=>o.x-o.w/2)),x1=Math.max(...res.map(o=>o.x+o.w/2));
+    const y0=Math.min(...res.map(o=>o.y-o.h/2)),y1=Math.max(...res.map(o=>o.y+o.h/2));
+    const px=(x1-x0)*.22+60,py=(y1-y0)*.3+50;
+    Object.assign(cloud.style,{left:x0-px+'px',top:y0-py+'px',width:(x1-x0)+2*px+'px',height:(y1-y0)+2*py+'px',opacity:1});
+  }else cloud.style.opacity=0;
+}
+function render(){
+  group();
+  $('empty').classList.toggle('hide',groups.length>0);
+  const tot=groups.reduce((s,g)=>s+g.count,0);
+  $('cnt').textContent=tot?`${tot} ${tot===1?'palabra':'palabras'}`:'';$('cnt').classList.toggle('on',tot>0);
+  const sig=groups.map(g=>g.k+g.count).join('|');
+  if(sig!==lastSig){lastSig=sig;layout()}
+}
+async function poll(){
+  try{
+    const r=await fetch(CONFIG.SCRIPT_URL+'?t='+Date.now(),{cache:'no-store'});
+    const d=await r.json();
+    if(d.ok){rows=d.words;render()}
+  }catch(e){}
+  setTimeout(poll,CONFIG.POLL_MS);
+}
+// Modo demo (index2.html?demo, o si todavía no configuraste config.js)
+function demo(){
+  const L='Pasión,Futuro,Familia,Excelencia,Compromiso,Historia,Jesuita,Comunidad,Esperanza,Orgullo,Fe,Formación,Vocación,Futuro,Familia,Fe,Historia,Hogar,Ciencia,Servicio,Tradición,Amistad,Futuro,Familia,Valores,Educación,Compromiso,Fe'.split(',');
+  let i=0;setInterval(()=>{rows.push({w:L[i++%L.length],ts:Date.now()});render()},1400);
+}
+// Moderador
+let armed=0;
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2800)}
+$('bClear').onclick=()=>{
+  if(Date.now()-armed>3000){armed=Date.now();toast('Tocá de nuevo para limpiar la pantalla');return}
+  armed=0;cutoff=rows.length?rows.reduce((m,r)=>Math.max(m,r.ts),0):Date.now();
+  localStorage.setItem('ucc70_cut',cutoff);lastSig='';render();toast('Pantalla limpia');
+};
+$('bAll').onclick=()=>{cutoff=0;localStorage.setItem('ucc70_cut',0);lastSig='';render();toast('Mostrando todas las palabras')};
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{lastSig='';render()},250)});
+const demoMode=location.search.includes('demo')||CONFIG.SCRIPT_URL.includes('PEGAR');
+const go=()=>demoMode?demo():poll();
+Promise.race([document.fonts.load('800 40px Montserrat'),new Promise(r=>setTimeout(r,2500))]).then(go);
+</script>
+</body>
+</html>
