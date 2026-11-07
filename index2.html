@@ -31,7 +31,7 @@ aside img.logo{max-width:66%;max-height:9vh}
 .drift:before{width:130px;height:130px;left:40px;top:-60px}.drift:after{width:160px;height:160px;left:120px;top:-85px}
 @keyframes dr{from{transform:translateX(-400px)}to{transform:translateX(120vw)}}
 #cloud{position:absolute;transition:all 1.6s cubic-bezier(.3,.8,.3,1);pointer-events:none}
-#cloud i{position:absolute;border-radius:50%;background:#e8eaf2;box-shadow:0 10px 40px rgba(24,44,73,.1);aspect-ratio:1;animation:bob 7s ease-in-out infinite alternate}
+#cloud i{position:absolute;border-radius:50%;background:#e8eaf2;aspect-ratio:1;animation:bob 7s ease-in-out infinite alternate}
 @keyframes bob{from{transform:translate(0,0) scale(1)}to{transform:translate(2%,-4%) scale(1.05)}}
 #words{position:absolute;inset:0}
 .w{position:absolute;transform:translate(-50%,-50%);font-family:Montserrat,Arial,sans-serif;font-weight:800;white-space:nowrap;line-height:1.1;transition:left 1.2s cubic-bezier(.3,.8,.3,1),top 1.2s cubic-bezier(.3,.8,.3,1),font-size 1.2s cubic-bezier(.3,.8,.3,1),opacity .8s}
@@ -72,7 +72,7 @@ aside img.logo{width:calc(100% + 3.2vw);max-width:none;max-height:none;margin:0 
 aside{flex:0 0 var(--aw);width:var(--aw);position:relative;padding:calc(100px + var(--aw)*.9*0.2049 + 2.5vh) 1.6vw 100px;transition:margin-left .6s cubic-bezier(.3,.8,.3,1)}
 #app.col aside{margin-left:calc(-1*var(--aw))}
 #stage{flex:1;min-width:0}
-#brand{position:absolute;left:calc(var(--aw)*.05);top:100px;width:calc(var(--aw)*.9);z-index:20}
+#brand{position:absolute;left:calc(var(--aw)*.05);top:72px;width:calc(var(--aw)*.9);z-index:20}
 #brand img{display:block;width:100%;height:auto;transition:opacity .5s}
 #brand .ln{position:absolute;inset:0;opacity:0;filter:url(#navy)}
 #app.col #brand .ln{opacity:1}#app.col #brand .lw{opacity:0}
@@ -81,7 +81,7 @@ aside{flex:0 0 var(--aw);width:var(--aw);position:relative;padding:calc(100px + 
 #unfold{position:fixed;left:8px;top:50%;transform:translateY(-50%);opacity:0;pointer-events:none;transition:opacity .4s .3s}
 #app.col #unfold{opacity:.85;pointer-events:auto}
 #fold svg,#unfold svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.title{top:100px}
+.title{top:96px;left:50%;right:auto;width:max-content;max-width:60%;transform:translateX(-50%);background:var(--azul);color:#fff;padding:.45em 1.1em;border-radius:0}
 .cnt{top:calc(100px + .4vh)}
 #mod{bottom:104px}#toast{bottom:156px}
 #empty{padding-top:60px;font:500 clamp(18px,1.9vw,32px) Montserrat,Arial,sans-serif;text-transform:none;letter-spacing:.02em;color:#555;opacity:.55}
@@ -93,9 +93,41 @@ aside{flex:0 0 var(--aw);width:var(--aw);position:relative;padding:calc(100px + 
 #words.hasSel .w:not(.sel){opacity:.3}
 #words.hid{pointer-events:none}
 #fold{transition:opacity .3s}#app.col #fold{opacity:0;pointer-events:none}
+/* portada y diapositiva 2 (las 3 diapositivas comparten elementos y se reacomodan con View Transitions) */
+#bluebg{position:fixed;inset:0;background:var(--azul);z-index:100;display:none}
+body.st1 #bluebg,body.st2 #bluebg{display:block}
+body.st1 #app,body.st2 #app{visibility:hidden}
+.slide{position:fixed;inset:0;z-index:101;display:none;flex-direction:column;align-items:center;justify-content:center;gap:3.2vh;padding:3vh 4vw}
+body.st1 #s1,body.st2 #s2{display:flex}
+.logo-wrap{position:relative;display:flex;justify-content:center}
+#s1 .lg{display:block;max-width:92vw;height:auto}
+#s2 .lg{display:block;width:calc(var(--aw)*.9);max-width:80vw;height:auto}
+#go1{position:absolute;top:100%;left:50%;margin:4vh 0 0 -22px;width:44px;height:44px;border:0;background:none;color:#fff;cursor:pointer;display:grid;place-items:center;padding:0;animation:nudge 1.8s ease-in-out infinite}
+#go1 svg{width:34px;height:34px;stroke:currentColor;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+@keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+.s2t{background:#fff;color:var(--azul);font:800 clamp(22px,2.6vw,44px)/1.15 Montserrat,Arial,sans-serif;text-transform:uppercase;text-align:center;padding:.45em 1.1em;border-radius:0;max-width:92vw}
+.s2tag{background:var(--coral);color:#fff;font:700 clamp(14px,1.3vw,22px) Montserrat,Arial,sans-serif;padding:.35em .9em}
+.s2qr{background:#fff;border-radius:4px;padding:10px;width:min(30vh,70vw);aspect-ratio:1;display:grid;place-items:center;box-shadow:0 1px 8px rgba(0,0,0,.3);cursor:zoom-in}
+.s2qr img{width:100%;height:100%;object-fit:contain}
+.s2pill{border:1px solid #f8f9fa;color:#f8f9fa;border-radius:50rem;padding:.45em 1.3em;text-align:center;font:500 clamp(12px,1.1vw,18px) Roboto,Arial,sans-serif}
+#go2{background:#fff;color:var(--azul);border:0;border-radius:50rem;padding:.55em 1.8em;font:700 clamp(14px,1.3vw,22px) Montserrat,Arial,sans-serif;cursor:pointer;box-shadow:0 1px 8px rgba(0,0,0,.25)}
+#go2:hover{background:var(--coral);color:#fff}
+/* botones del moderador: visibles en todas las diapositivas; el ojito solo en la 3 */
+#mod{position:fixed;z-index:150}
+#toast{position:fixed;z-index:150}
+body:not(.st3) #bAll{display:none}
+#big{z-index:200}
+/* elementos compartidos: mismo nombre en cada diapositiva => se reacomodan */
+body.st1 #bluebg,body.st2 #bluebg,body.st3 aside{view-transition-name:side}
+body.st1 #s1 .lg,body.st2 #s2 .lg,body.st3 #brand{view-transition-name:logo}
+body.st2 .s2t,body.st3 .title{view-transition-name:ttl}
+body.st2 .s2tag,body.st3 aside .tag{view-transition-name:tag}
+body.st2 .s2qr,body.st3 aside .qr{view-transition-name:qr}
+body.st2 .s2pill,body.st3 aside .pill{view-transition-name:pill}
+::view-transition-group(*){animation-duration:.9s;animation-timing-function:cubic-bezier(.3,.8,.3,1)}
 </style>
 </head>
-<body>
+<body class="st1">
 <svg width="0" height="0" style="position:absolute"><filter id="navy" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 .094  0 0 0 0 .173  0 0 0 0 .286  0 0 0 1 0"/></filter></svg>
 <div id="app">
   <div id="brand"><img class="lw" src="logoblanco.png" alt="UCC"><img class="ln" src="logoblanco.png" alt=""></div>
@@ -115,12 +147,24 @@ aside{flex:0 0 var(--aw);width:var(--aw);position:relative;padding:calc(100px + 
     <div id="cloud"></div>
     <div id="words"></div>
     <div id="empty">Tu palabra aparecerá acá</div>
-    <div id="toast"></div>
-    <div id="mod">
-      <button id="bFull" title="Pantalla completa (F11)"></button>
-      <button id="bAll" title="Mostrar todas las palabras (moderador)"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
-    </div>
   </div>
+</div>
+<div id="toast"></div>
+<div id="mod">
+  <button id="bFull" title="Pantalla completa (F11)"></button>
+  <button id="bAll" title="Mostrar todas las palabras (moderador)"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
+</div>
+<div id="bluebg"></div>
+<div class="slide" id="s1">
+  <div class="logo-wrap"><img class="lg" src="logoblanco.png" alt="UCC"><button id="go1" aria-label="Comenzar"><svg viewBox="0 0 24 24"><path d="M5 9l7 7 7-7"/></svg></button></div>
+</div>
+<div class="slide" id="s2">
+  <img class="lg" src="logoblanco.png" alt="UCC">
+  <div class="s2t">¿Qué palabra define a la UCC?</div>
+  <div class="s2tag">Sumá tu palabra</div>
+  <div class="s2qr" id="qr2" title="Tocá para agrandar"><img src="qr-ucc.png" alt="QR"></div>
+  <div class="s2pill">Escaneá el código con la cámara de tu celular</div>
+  <button id="go2">Ver resultados</button>
 </div>
 <div id="big"><img src="qr-ucc.png" alt="QR"></div>
 <script src="config.js"></script>
@@ -161,7 +205,7 @@ function place(W,H,k){
   }
   return out;
 }
-cloud.innerHTML='<i></i>'.repeat(13);[...cloud.children].forEach((e,j)=>e.style.animationDelay=-(j*1.1)+'s');
+cloud.innerHTML='<i></i>'.repeat(120);[...cloud.children].forEach((e,j)=>e.style.animationDelay=-(j*1.1)+'s');
 function applySel(){els.forEach((el,k)=>el.classList.toggle('sel',sel.has(k)));wordsEl.classList.toggle('hasSel',sel.size>0)}
 function layout(){
   const W=stage.clientWidth,H=stage.clientHeight;let res=null,k=1;
@@ -194,12 +238,22 @@ function layout(){
     let A=(x1-x0)/2*1.08+26,B=(y1-y0)/2*1.08+22;
     A=Math.min(Math.max(A,150),cx-28,W-cx-28);B=Math.min(Math.max(B,95),cy-(TOP-30),BOT+30-cy);
     const K=[...cloud.children],put=(e,l,t,w,h)=>{e.style.left=l+'px';e.style.top=t+'px';e.style.width=w+'px';e.style.height=h+'px'};
-    put(K[0],cx-A*.82,cy-B*.82,A*1.64,B*1.64);
-    const R=Math.min(A,B)*.4;
-    for(let j=1;j<K.length;j++){
-      const t=(j-1)/(K.length-1)*2*Math.PI,v=.8+.35*((j*37)%5)/4,ry=R*v,rx=Math.max(A*.17,R*.7)*v;
-      put(K[j],cx+(A-rx)*Math.cos(t)-rx,cy+(B-ry)*Math.sin(t)-ry,2*rx,2*ry);
+    K.forEach(e=>put(e,cx,cy,0,0));
+    // muchos círculos chicos (perfectos) que juntos forman la nube
+    const N=60,sp=Math.sqrt(Math.PI*A*B/(.87*N)),r=Math.max(sp/1.25,Math.min(A,B)*.2);
+    const a=Math.max(A-r,1),b=Math.max(B-r,1),pts=[];
+    const dx=sp,dy=sp*.87;
+    for(let row=0,y=-b;y<=b;y+=dy,row++){
+      for(let x=-a+(row%2?dx/2:0);x<=a;x+=dx){
+        if((x/a)**2+(y/b)**2<=1)pts.push([x,y]);
+      }
     }
+    const per=2*Math.PI*Math.sqrt((a*a+b*b)/2),nb=Math.max(12,Math.round(per/(r*1.25)));
+    for(let q=0;q<nb;q++){const t=q/nb*2*Math.PI;pts.push([a*Math.cos(t),b*Math.sin(t)])}
+    pts.slice(0,K.length).forEach((pt,q)=>{
+      const rr=r*(.85+.3*((q*37)%7)/6);
+      put(K[q],cx+pt[0]-rr,cy+pt[1]-rr,2*rr,2*rr);
+    });
     cloud.style.opacity=1;
   }else cloud.style.opacity=0;
   applySel();
@@ -237,7 +291,7 @@ $('unfold').onclick=()=>$('app').classList.remove('col');
 stage.addEventListener('click',e=>{
   if(e.target.closest('#mod,#toast'))return;
   const w=e.target.closest('.w');
-  if(w){const k=w.dataset.k;sel.has(k)?sel.delete(k):sel.add(k)}else sel.clear();
+  if(w){const k=w.dataset.k,was=sel.has(k);sel.clear();if(!was)sel.add(k)}else sel.clear();
   applySel();
 });
 let hidden=false;
@@ -245,6 +299,14 @@ const EYE='<svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1
 const EYEOFF='<svg viewBox="0 0 24 24"><path d="M17.9 17.9A10.9 10.9 0 0112 20C5 20 1 12 1 12a18.5 18.5 0 015.1-5.9M9.9 4.2A9.1 9.1 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.2 3.2M14.1 14.1a3 3 0 11-4.2-4.2M1 1l22 22"/></svg>';
 $('bAll').onclick=()=>{hidden=!hidden;wordsEl.classList.toggle('hid',hidden);$('bAll').innerHTML=hidden?EYEOFF:EYE;toast(hidden?'Palabras ocultas':'Palabras visibles')};
 $('qr').onclick=()=>$('big').classList.add('on');
+$('qr2').onclick=()=>$('big').classList.add('on');
+function goTo(n){
+  const apply=()=>{document.body.className='st'+n};
+  if(document.startViewTransition&&!matchMedia('(prefers-reduced-motion:reduce)').matches)document.startViewTransition(apply);
+  else apply();
+}
+$('go1').onclick=()=>goTo(2);
+$('go2').onclick=()=>goTo(3);
 $('big').onclick=()=>$('big').classList.remove('on');
 addEventListener('keydown',e=>{if(e.key==='Escape')$('big').classList.remove('on')});
 let rt;new ResizeObserver(()=>{clearTimeout(rt);rt=setTimeout(()=>{lastSig=null;render()},250)}).observe(stage);
