@@ -6,11 +6,11 @@
 <title>UCC 70 años · Nube de palabras</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--oscuro:#182c49;--azul:#1d317d;--coral:#fe4767;--cian:#17a2b8}
+:root{--oscuro:#182c49;--azul:#002f87;--fondo:#c6d1ed;--coral:#fe4767;--cian:#17a2b8}
 *{box-sizing:border-box}
-html,body{margin:0;height:100%;overflow:hidden;font-family:Roboto,Arial,sans-serif;color:#555;background:#fff}
+html,body{margin:0;height:100%;overflow:hidden;font-family:Roboto,Arial,sans-serif;color:#555;background:var(--fondo)}
 #app{display:grid;grid-template-columns:minmax(300px,26%) 1fr;height:100%}
-aside{background:linear-gradient(rgba(29,49,125,.19),rgba(29,49,125,.19)),url(fondo.jpg) center/cover,linear-gradient(170deg,#25436f,var(--oscuro));color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;padding:3vh 1.6vw;z-index:5}
+aside{background:#002f87;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;padding:3vh 1.6vw;z-index:5}
 aside img.logo{max-width:66%;max-height:9vh}
 .logo-fb{display:none;font:800 44px Montserrat;letter-spacing:3px}
 .slide-card{width:100%;border-radius:20px;padding:2.2vh 1.4vw;background:linear-gradient(180deg,rgba(37,67,111,.72) 21%,rgba(37,37,37,.45) 98%);box-shadow:0 0 3px rgba(0,0,0,.27)}
@@ -22,25 +22,25 @@ aside img.logo{max-width:66%;max-height:9vh}
 .qr{background:#fff;border-radius:4px;padding:10px;width:min(74%,30vh);aspect-ratio:1;display:grid;place-items:center;color:var(--oscuro);font-weight:700;font-size:14px;box-shadow:0 1px 8px rgba(0,0,0,.3)}
 .qr img{width:100%;height:100%;object-fit:contain}
 .pill{display:inline-block;border:1px solid #f8f9fa;color:#f8f9fa;border-radius:50rem;padding:.45em 1.3em;font:500 clamp(12px,1vw,17px) Roboto,Arial,sans-serif}
-#stage{position:relative;overflow:hidden;background:#fff}
+#stage{position:relative;overflow:hidden;background:var(--fondo)}
 .title{position:absolute;left:2.2vw;top:2.4vh;z-index:3;font:800 clamp(18px,2vw,34px) Montserrat,Arial,sans-serif;text-transform:uppercase;color:var(--oscuro)}
 .cnt{position:absolute;right:2vw;top:2.8vh;z-index:3;font:500 clamp(13px,1.1vw,18px) Montserrat,Arial,sans-serif;border:1px solid var(--oscuro);color:var(--oscuro);border-radius:50rem;padding:.3em 1em;opacity:0;transition:opacity .4s}
 .cnt.on{opacity:1}
-.drift{position:absolute;background:#eef1f8;border-radius:100px;width:300px;height:80px;animation:dr linear infinite}
+.drift{position:absolute;background:#fff;border-radius:100px;width:300px;height:80px;animation:dr linear infinite}
 .drift:before,.drift:after{content:"";position:absolute;background:inherit;border-radius:50%}
 .drift:before{width:130px;height:130px;left:40px;top:-60px}.drift:after{width:160px;height:160px;left:120px;top:-85px}
 @keyframes dr{from{transform:translateX(-400px)}to{transform:translateX(120vw)}}
 #cloud{position:absolute;transition:all 1.6s cubic-bezier(.3,.8,.3,1);pointer-events:none}
-#cloud i{position:absolute;border-radius:50%;background:#e8eaf2;aspect-ratio:1;animation:bob 7s ease-in-out infinite alternate}
+#cloud i{position:absolute;border-radius:50%;background:#fff;aspect-ratio:1;animation:bob 7s ease-in-out infinite alternate}
 @keyframes bob{from{transform:translate(0,0) scale(1)}to{transform:translate(2%,-4%) scale(1.05)}}
 #words{position:absolute;inset:0}
 .w{position:absolute;transform:translate(-50%,-50%);font-family:Montserrat,Arial,sans-serif;font-weight:800;white-space:nowrap;line-height:1.1;transition:left 1.2s cubic-bezier(.3,.8,.3,1),top 1.2s cubic-bezier(.3,.8,.3,1),font-size 1.2s cubic-bezier(.3,.8,.3,1),opacity .8s}
-.w .pop{animation:in .9s cubic-bezier(.3,1.7,.5,1) both}
-.w .pop.bump{animation:bump .9s cubic-bezier(.3,1.7,.5,1)}
+.w .pop{animation:in .9s cubic-bezier(.3,1.3,.5,1) both}
+.w .pop.bump{animation:bump .9s cubic-bezier(.3,1.3,.5,1)}
 .w .fl{display:inline-block;animation:fl var(--d,7s) ease-in-out var(--l,0s) infinite alternate}
 .w.out{opacity:0}
 @keyframes in{from{transform:scale(0) rotate(-12deg);opacity:0}to{transform:scale(1);opacity:1}}
-@keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.35)}100%{transform:scale(1)}}
+@keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.12)}100%{transform:scale(1)}}
 @keyframes fl{from{transform:translate(0,0)}to{transform:translate(var(--x,6px),var(--y,-8px))}}
 #mod{position:absolute;right:14px;bottom:12px;display:flex;gap:8px;z-index:9;opacity:.25;transition:opacity .3s}
 #mod:hover{opacity:1}
@@ -88,7 +88,7 @@ aside{flex:0 0 var(--aw);width:var(--aw);position:relative;padding:calc(100px + 
 #cloud{inset:0;transition:opacity .8s}
 #cloud i{aspect-ratio:auto;transition:left 1.6s cubic-bezier(.3,.8,.3,1),top 1.6s cubic-bezier(.3,.8,.3,1),width 1.6s cubic-bezier(.3,.8,.3,1),height 1.6s cubic-bezier(.3,.8,.3,1)}
 .w{cursor:pointer;transition:left 1.2s cubic-bezier(.3,.8,.3,1),top 1.2s cubic-bezier(.3,.8,.3,1),font-size 1.2s cubic-bezier(.3,.8,.3,1),opacity .6s,transform .35s,color .3s}
-.w.sel{color:#fe4767!important;transform:translate(-50%,-50%) scale(1.14);z-index:3}
+.w.sel{color:#fe4767!important;transform:translate(-50%,-50%) scale(1.08);z-index:3}
 .w.sel .fl{text-shadow:0 0 18px rgba(254,71,103,.35)}
 #words.hasSel .w:not(.sel){opacity:.3}
 #words.hid{pointer-events:none}
@@ -123,24 +123,25 @@ body.st1 #s1 .lg,body.st2 #s2 .lg,body.st3 #brand{view-transition-name:logo}
 body.st2 .s2t,body.st3 .title{view-transition-name:ttl}
 body.st2 .s2tag,body.st3 aside .tag{view-transition-name:tag}
 body.st2 .s2qr,body.st3 aside .qr{view-transition-name:qr}
-body.st2 .s2pill,body.st3 aside .pill{view-transition-name:pill}
 ::view-transition-group(*){animation-duration:.9s;animation-timing-function:cubic-bezier(.3,.8,.3,1)}
+/* ajustes v6 */
+aside{justify-content:center;gap:3.5vh}
+.title{text-transform:none;font-weight:700;font-size:clamp(15px,1.55vw,28px);line-height:1.3;max-width:70%}
+.s2t{text-transform:none;font-weight:700;line-height:1.35;font-size:clamp(20px,2.3vw,40px)}
 </style>
 </head>
 <body class="st1">
-<svg width="0" height="0" style="position:absolute"><filter id="navy" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 .094  0 0 0 0 .173  0 0 0 0 .286  0 0 0 1 0"/></filter></svg>
+<svg width="0" height="0" style="position:absolute"><filter id="navy" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 .184  0 0 0 0 .529  0 0 0 1 0"/></filter></svg>
 <div id="app">
   <div id="brand"><img class="lw" src="logoblanco.png" alt="UCC"><img class="ln" src="logoblanco.png" alt=""></div>
   <button id="unfold" title="Mostrar barra"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
   <aside>
-    <div class="slide-card"><h1><b>70</b>años transformando el mundo juntos</h1><p>Desde 1956 formamos personas de ciencia, conciencia ética y profundo compromiso social.</p></div>
     <div class="tag">Sumá tu palabra</div>
     <div class="qr" id="qr" title="Tocá para agrandar"><img src="qr-ucc.png" alt="QR" onerror="this.replaceWith('Falta qr-ucc.png')"></div>
-    <div class="pill">Escaneá el código con la cámara de tu celular</div>
     <button id="fold" title="Ocultar barra"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
   </aside>
   <div id="stage">
-    <div class="title">¿Qué palabra define a la UCC?</div><div class="cnt" id="cnt"></div>
+    <div class="title">En una palabra<br>¿Qué sigue siendo UCC en vos hoy?</div><div class="cnt" id="cnt"></div>
     <div class="drift" style="top:8%;animation-duration:90s"></div>
     <div class="drift" style="top:45%;animation-duration:130s;animation-delay:-60s;transform-origin:left;scale:1.4"></div>
     <div class="drift" style="top:78%;animation-duration:110s;animation-delay:-30s"></div>
@@ -160,10 +161,9 @@ body.st2 .s2pill,body.st3 aside .pill{view-transition-name:pill}
 </div>
 <div class="slide" id="s2">
   <img class="lg" src="logoblanco.png" alt="UCC">
-  <div class="s2t">¿Qué palabra define a la UCC?</div>
+  <div class="s2t">En una palabra<br>¿Qué sigue siendo UCC en vos hoy?</div>
   <div class="s2tag">Sumá tu palabra</div>
   <div class="s2qr" id="qr2" title="Tocá para agrandar"><img src="qr-ucc.png" alt="QR"></div>
-  <div class="s2pill">Escaneá el código con la cámara de tu celular</div>
   <button id="go2">Ver resultados</button>
 </div>
 <div id="big"><img src="qr-ucc.png" alt="QR"></div>
@@ -171,10 +171,12 @@ body.st2 .s2pill,body.st3 aside .pill{view-transition-name:pill}
 <script>
 const $=id=>document.getElementById(id);
 const stage=$('stage'),wordsEl=$('words'),cloud=$('cloud');
-const COLORS=['#182c49','#1d317d','#17a2b8','#00a4eb','#555555'],sel=new Set();
+const COLORS=['#182c49','#002f87','#17a2b8','#00a4eb','#555555'],sel=new Set();
 const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\p{L}\p{N}]/gu,'');
 const pretty=s=>s.trim().toLocaleUpperCase('es');
 const hash=s=>[...s].reduce((a,c)=>(a*31+c.charCodeAt(0))>>>0,7);
+const GAP=26; // aire mínimo entre palabras: absorbe el wiggle, el zoom y la selección
+function topY(){const t=document.querySelector('#stage .title').getBoundingClientRect(),q=stage.getBoundingClientRect();return Math.max(160,t.bottom-q.top+22)}
 const ctx=document.createElement('canvas').getContext('2d');
 let rows=[],groups=[],els=new Map(),lastSig=null,cutoff=0;
 
@@ -189,12 +191,12 @@ function group(){
   groups=[...m.values()].sort((a,b)=>b.count-a.count||a.first-b.first);
 }
 function place(W,H,k){
-  const TOP=160,BOT=H-100,n=groups.length,sc=W/1300,base=Math.max(30,Math.min(84,88-n*1.1))*sc*k,pad=12,out=[],obs=[];
+  const TOP=topY(),BOT=H-100,n=groups.length,sc=W/1300,base=Math.max(30,Math.min(84,88-n*1.1))*sc*k,pad=12,out=[],obs=[];
   if($('app').classList.contains('col')){const b=$('brand').getBoundingClientRect(),q=stage.getBoundingClientRect();obs.push({x:(b.left+b.right)/2-q.left,y:(b.top+b.bottom)/2-q.top,w:b.width+30,h:b.height+30})}
   for(const g of groups){
     const size=Math.min(base*(1+.3*(g.count-1)),base*3.3,H*.22);
     ctx.font=`800 ${size}px Montserrat,Arial,sans-serif`;
-    const w=ctx.measureText(g.label).width+size*.4,h=size*1.12;let ok=false;
+    const w=ctx.measureText(g.label).width+size*.4+GAP,h=size*1.12+GAP;let ok=false;
     for(let i=0;i<2600;i++){
       const a=i*.3,r=1.1*a,x=W/2+r*Math.cos(a)*1.7,y=(TOP+BOT)/2+r*Math.sin(a);
       if(x-w/2<pad||x+w/2>W-pad||y-h/2<TOP||y+h/2>BOT)continue;
@@ -221,7 +223,7 @@ function layout(){
       const fl=el.querySelector('.fl'),h=hash(o.g.k);
       fl.textContent=o.g.label;el.style.color=COLORS[h%COLORS.length];
       fl.style.setProperty('--d',(5+h%5)+'s');fl.style.setProperty('--l',-(h%7)+'s');
-      fl.style.setProperty('--x',((h%13)-6)+'px');fl.style.setProperty('--y',-(4+h%9)+'px');
+      fl.style.setProperty('--x',((h%11)-5)+'px');fl.style.setProperty('--y',-(3+h%7)+'px');
       el.style.left=o.x+'px';el.style.top=o.y+'px';el.style.fontSize=o.size+'px';
       wordsEl.appendChild(el);els.set(o.g.k,el);
     }else if(+el.dataset.c<o.g.count){
@@ -234,7 +236,7 @@ function layout(){
   if(res.length){ // la nube de fondo: una elipse ajustada al contorno de las palabras
     const x0=Math.min(...res.map(o=>o.x-o.w/2)),x1=Math.max(...res.map(o=>o.x+o.w/2));
     const y0=Math.min(...res.map(o=>o.y-o.h/2)),y1=Math.max(...res.map(o=>o.y+o.h/2));
-    const cx=(x0+x1)/2,cy=(y0+y1)/2,TOP=160,BOT=H-100;
+    const cx=(x0+x1)/2,cy=(y0+y1)/2,TOP=topY(),BOT=H-100;
     let A=(x1-x0)/2*1.08+26,B=(y1-y0)/2*1.08+22;
     A=Math.min(Math.max(A,150),cx-28,W-cx-28);B=Math.min(Math.max(B,95),cy-(TOP-30),BOT+30-cy);
     const K=[...cloud.children],put=(e,l,t,w,h)=>{e.style.left=l+'px';e.style.top=t+'px';e.style.width=w+'px';e.style.height=h+'px'};
