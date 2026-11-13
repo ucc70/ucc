@@ -110,8 +110,9 @@ body.st1 #s1,body.st2 #s2{display:flex}
 .s2qr{background:#fff;border-radius:4px;padding:10px;width:min(30vh,70vw);aspect-ratio:1;display:grid;place-items:center;box-shadow:0 1px 8px rgba(0,0,0,.3);cursor:zoom-in}
 .s2qr img{width:100%;height:100%;object-fit:contain}
 .s2pill{border:1px solid #f8f9fa;color:#f8f9fa;border-radius:50rem;padding:.45em 1.3em;text-align:center;font:500 clamp(12px,1.1vw,18px) Roboto,Arial,sans-serif}
-#go2{background:#fff;color:var(--azul);border:0;border-radius:50rem;padding:.55em 1.8em;font:700 clamp(14px,1.3vw,22px) Montserrat,Arial,sans-serif;cursor:pointer;box-shadow:0 1px 8px rgba(0,0,0,.25)}
-#go2:hover{background:var(--coral);color:#fff}
+#go2{width:44px;height:44px;border:0;background:none;color:#fff;cursor:pointer;display:grid;place-items:center;padding:0;animation:nudgeL 1.8s ease-in-out infinite}
+#go2 svg{width:34px;height:34px;stroke:currentColor;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+@keyframes nudgeL{0%,100%{transform:translateX(0)}50%{transform:translateX(-8px)}}
 /* botones del moderador: visibles en todas las diapositivas; el ojito solo en la 3 */
 #mod{position:fixed;z-index:150}
 #toast{position:fixed;z-index:150}
@@ -147,7 +148,6 @@ aside{justify-content:center;gap:3.5vh}
     <div class="drift" style="top:78%;animation-duration:110s;animation-delay:-30s"></div>
     <div id="cloud"></div>
     <div id="words"></div>
-    <div id="empty">Tu palabra aparecerá acá</div>
   </div>
 </div>
 <div id="toast"></div>
@@ -164,7 +164,7 @@ aside{justify-content:center;gap:3.5vh}
   <div class="s2t">En una palabra<br>¿Qué sigue siendo UCC en vos hoy?</div>
   <div class="s2tag">Sumá tu palabra</div>
   <div class="s2qr" id="qr2" title="Tocá para agrandar"><img src="qr-ucc.png" alt="QR"></div>
-  <button id="go2">Ver resultados</button>
+  <button id="go2" aria-label="Ver resultados"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
 </div>
 <div id="big"><img src="qr-ucc.png" alt="QR"></div>
 <script src="config.js"></script>
@@ -262,7 +262,6 @@ function layout(){
 }
 function render(){
   group();
-  $('empty').classList.toggle('hide',groups.length>0);
   const tot=groups.reduce((s,g)=>s+g.count,0);
   $('cnt').textContent=tot?`${tot} ${tot===1?'palabra':'palabras'}`:'';$('cnt').classList.toggle('on',tot>0);
   const sig=groups.map(g=>g.k+g.count).join('|');
