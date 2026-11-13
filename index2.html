@@ -112,7 +112,7 @@ body.st1 #s1,body.st2 #s2{display:flex}
 .s2pill{border:1px solid #f8f9fa;color:#f8f9fa;border-radius:50rem;padding:.45em 1.3em;text-align:center;font:500 clamp(12px,1.1vw,18px) Roboto,Arial,sans-serif}
 #go2{width:44px;height:44px;border:0;background:none;color:#fff;cursor:pointer;display:grid;place-items:center;padding:0;animation:nudgeL 1.8s ease-in-out infinite}
 #go2 svg{width:34px;height:34px;stroke:currentColor;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-@keyframes nudgeL{0%,100%{transform:translateX(0)}50%{transform:translateX(-8px)}}
+@keyframes nudgeL{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
 /* botones del moderador: visibles en todas las diapositivas; el ojito solo en la 3 */
 #mod{position:fixed;z-index:150}
 #toast{position:fixed;z-index:150}
@@ -164,7 +164,7 @@ aside{justify-content:center;gap:3.5vh}
   <div class="s2t">En una palabra<br>¿Qué sigue siendo UCC en vos hoy?</div>
   <div class="s2tag">Sumá tu palabra</div>
   <div class="s2qr" id="qr2" title="Tocá para agrandar"><img src="qr-ucc.png" alt="QR"></div>
-  <button id="go2" aria-label="Ver resultados"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <button id="go2" aria-label="Ver resultados"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
 </div>
 <div id="big"><img src="qr-ucc.png" alt="QR"></div>
 <script src="config.js"></script>
